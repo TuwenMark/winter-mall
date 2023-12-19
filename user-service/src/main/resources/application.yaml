@@ -1,18 +1,18 @@
 server:
-  port: 8082
+  port: 8084
 spring:
   application:
-    name: cart-service
+    name: user-service
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://${hm.db.host}:3306/wm-cart?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${hm.db.host}:3306/wm-user?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: ${hm.db.pw}
   cloud:
     nacos:
-      server-addr: 192.168.15.135:8848
+      server-addr: 192.168.15.135:8848  # nacos地址
 mybatis-plus:
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
@@ -30,8 +30,8 @@ logging:
 knife4j:
   enable: true
   openapi:
-    title: 购物车服务接口文档
-    description: "购物车服务接口文档"
+    title: 用户服务接口文档
+    description: "用户服务接口文档"
     email: zhanghuyi@itcast.cn
     concat: winter
     url: https://github.com/TuwenMark
@@ -41,7 +41,19 @@ knife4j:
         group-name: default
         api-rule: package
         api-rule-resources:
-          - com.winter.cart.controller
-feign:
-  okhttp:
-    enabled: true # 开启Feign底层通过okhttp发起http调用，支持连接池
+          - com.winter.user.controller
+wm:
+  jwt:
+    location: classpath:winter-mall.jks
+    alias: hmall
+    password: hmall123
+    tokenTTL: 30m
+  auth:
+    excludePaths:
+      - /search/**
+      - /users/login
+      - /items/**
+      - /hi
+      - /doc.html
+      - /swagger-resources/**
+      - /webjars/**
