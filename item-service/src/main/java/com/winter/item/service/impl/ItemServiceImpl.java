@@ -1,10 +1,10 @@
 package com.winter.item.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.winter.api.dto.ItemDTO;
+import com.winter.api.dto.OrderDetailDTO;
 import com.winter.common.exception.BizIllegalException;
 import com.winter.common.utils.BeanUtils;
-import com.winter.item.domain.dto.ItemDTO;
-import com.winter.item.domain.dto.OrderDetailDTO;
 import com.winter.item.domain.po.Item;
 import com.winter.item.mapper.ItemMapper;
 import com.winter.item.service.IItemService;

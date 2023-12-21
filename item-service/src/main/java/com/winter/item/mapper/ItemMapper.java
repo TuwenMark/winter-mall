@@ -1,7 +1,7 @@
 package com.winter.item.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.winter.item.domain.dto.OrderDetailDTO;
+import com.winter.api.dto.OrderDetailDTO;
 import com.winter.item.domain.po.Item;
 import org.apache.ibatis.annotations.Update;
 

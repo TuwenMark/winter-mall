@@ -1,0 +1,47 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: order-service
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://${wm.db.host}:3306/wm-trade?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${wm.db.pw}
+  cloud:
+    nacos:
+      server-addr: 192.168.15.135:8848
+mybatis-plus:
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      update-strategy: not_null
+      id-type: auto
+logging:
+  level:
+    com.winter: debug
+  pattern:
+    dateformat: HH:mm:ss:SSS
+  file:
+    path: "logs/${spring.application.name}"
+knife4j:
+  enable: true
+  openapi:
+    title: 订单服务接口文档
+    description: "订单服务接口文档"
+    email: zhanghuyi@itcast.cn
+    concat: winter
+    url: https://github.com/TuwenMark
+    version: v1.0.0
+    group:
+      default:
+        group-name: default
+        api-rule: package
+        api-rule-resources:
+          - com.winter.order.controller
+feign:
+  okhttp:
+    enabled: true # 开启Feign底层通过okhttp发起http调用，支持连接池

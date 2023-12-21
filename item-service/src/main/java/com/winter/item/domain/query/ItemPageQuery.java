@@ -1,4 +1,4 @@
-package com.winter.item.query;
+package com.winter.item.domain.query;
 
 import com.winter.common.domain.PageQuery;
 import io.swagger.annotations.ApiModel;

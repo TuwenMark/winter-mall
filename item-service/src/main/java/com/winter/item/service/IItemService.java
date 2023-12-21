@@ -1,8 +1,8 @@
 package com.winter.item.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.winter.item.domain.dto.ItemDTO;
-import com.winter.item.domain.dto.OrderDetailDTO;
+import com.winter.api.dto.ItemDTO;
+import com.winter.api.dto.OrderDetailDTO;
 import com.winter.item.domain.po.Item;
 
 import java.util.Collection;
