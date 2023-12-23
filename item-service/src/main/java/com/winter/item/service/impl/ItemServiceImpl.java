@@ -40,6 +40,11 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements II
 
     @Override
     public List<ItemDTO> queryItemByIds(Collection<Long> ids) {
+        try {
+            Thread.sleep(500);
+        } catch (Exception e) {
+            System.out.println("报错了");
+        }
         return BeanUtils.copyList(listByIds(ids), ItemDTO.class);
     }
 }

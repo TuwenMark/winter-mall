@@ -1,4 +1,7 @@
 wm:
   db:
     host: 192.168.15.135 # 修改为你自己的虚拟机IP地址
+    port: 3306  # 不配置默认3306
+    un: root  # 不配置默认root
     pw: 123 # 修改为docker中的MySQL密码
+    database: wm-user

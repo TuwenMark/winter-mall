@@ -1,5 +1,6 @@
 package com.winter.api.client;
 
+import com.winter.api.client.fallback.ItemClientFallbackFactory;
 import com.winter.api.dto.ItemDTO;
 import com.winter.api.dto.OrderDetailDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author: Mr.Ye
  * @create: 2023-12-17 08:20
  **/
-@FeignClient("item-service")
+@FeignClient(value = "item-service", fallbackFactory = ItemClientFallbackFactory.class)
 public interface ItemClient {
     @GetMapping("/items")
     List<ItemDTO> queryItemByIds(@RequestParam("ids") Collection<Long> ids);
