@@ -4,6 +4,7 @@ import com.winter.cart.domain.dto.CartFormDTO;
 import com.winter.cart.domain.po.Cart;
 import com.winter.cart.domain.vo.CartVO;
 import com.winter.cart.service.ICartService;
+import feign.Headers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,7 @@ public class CartController {
     public List<CartVO> queryMyCarts(){
         return cartService.queryMyCarts();
     }
+
     @ApiOperation("批量删除购物车中商品")
     @ApiImplicitParam(name = "ids", value = "购物车条目id集合")
     @DeleteMapping

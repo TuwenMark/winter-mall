@@ -18,6 +18,12 @@
     </properties>
 
     <dependencies>
+        <!--common-->
+        <dependency>
+            <groupId>com.winter</groupId>
+            <artifactId>winter-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!--openFeign-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

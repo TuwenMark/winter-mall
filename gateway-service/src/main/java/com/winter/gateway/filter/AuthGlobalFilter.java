@@ -1,6 +1,8 @@
 package com.winter.gateway.filter;
 
+import com.winter.common.exception.UnauthorizedException;
 import com.winter.gateway.config.AuthProperties;
+import com.winter.common.constant.UserConstant;
 import com.winter.gateway.util.JwtTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -39,19 +41,29 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
         // 3. 获取token
-        List<String> tokenList = request.getHeaders().get("authorization");
+        List<String> tokenList = request.getHeaders().get(UserConstant.AUTHORIZATION_HEADER);
         if (tokenList == null || tokenList.isEmpty()) {
             // 拦截并设置响应状态码401
-            ServerHttpResponse response = exchange.getResponse();
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            return response.setComplete();
+            return handleResponse(exchange);
         }
         // 4. 解析token
-        Long userId = jwtTool.parseToken(tokenList.get(0));
-        // 5. TODO 传递token
-        System.out.println(userId);
+        Long userId = null;
+        try {
+            userId = jwtTool.parseToken(tokenList.get(0));
+        } catch (UnauthorizedException e) {
+            return handleResponse(exchange);
+        }
+        // 5. 传递token
+        String userInfo = userId.toString();
+        ServerWebExchange newExchange = exchange.mutate().request(builder -> builder.header(UserConstant.USERINFO_HEADER, userInfo)).build();
         // 放行
-        return chain.filter(exchange);
+        return chain.filter(newExchange);
+    }
+
+    private static Mono<Void> handleResponse(ServerWebExchange exchange) {
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(HttpStatus.UNAUTHORIZED);
+        return response.setComplete();
     }
 
     private boolean isExclude(String path) {
