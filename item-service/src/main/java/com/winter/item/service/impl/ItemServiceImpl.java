@@ -9,6 +9,7 @@ import com.winter.item.domain.po.Item;
 import com.winter.item.mapper.ItemMapper;
 import com.winter.item.service.IItemService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements IItemService {
 
     @Override
+    @Transactional
     public void deductStock(List<OrderDetailDTO> items) {
         String sqlStatement = "com.hmall.item.mapper.ItemMapper.updateStock";
         boolean r = false;
@@ -31,7 +33,8 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements II
             r = executeBatch(items, (sqlSession, entity) -> sqlSession.update(sqlStatement, entity));
         } catch (Exception e) {
             log.error("更新库存异常", e);
-            return;
+            // 抛出异常，避免事务失效
+            throw new RuntimeException("库存不足！");
         }
         if (!r) {
             throw new BizIllegalException("库存不足！");
@@ -40,11 +43,11 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements II
 
     @Override
     public List<ItemDTO> queryItemByIds(Collection<Long> ids) {
-        try {
-            Thread.sleep(500);
-        } catch (Exception e) {
-            System.out.println("报错了");
-        }
+//        try {
+//            Thread.sleep(500);
+//        } catch (Exception e) {
+//            System.out.println("报错了");
+//        }
         return BeanUtils.copyList(listByIds(ids), ItemDTO.class);
     }
 }

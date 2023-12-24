@@ -1,5 +1,6 @@
 package com.winter.order;
 
+import com.winter.api.client.fallback.ItemClientFallbackFactory;
 import com.winter.api.config.DefaultFeignConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  **/
 @SpringBootApplication
 @MapperScan("com.winter.order.mapper")
-@EnableFeignClients(basePackages = "com.winter.api.client", defaultConfiguration = DefaultFeignConfig.class)
+@EnableFeignClients(basePackages = "com.winter.api.client", defaultConfiguration = {DefaultFeignConfig.class, ItemClientFallbackFactory.class})
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);
